@@ -58,10 +58,10 @@ services:
       REDIS_URL: redis://redis:6379
       RABBITMQ_URL: amqp://rabbitmq:5672
 
-  Notification-service:
-    build: ./Notification-service
+  notification-service:
+    build: ./notification-service
     env_file:
-      - ./Notification-service/.env
+      - ./notification-service/.env
     depends_on:
       - redis
       - rabbitmq
@@ -69,10 +69,10 @@ services:
       REDIS_URL: redis://redis:6379
       RABBITMQ_URL: amqp://rabbitmq:5672
 
-  Feed-service:
-    build: ./Feed-service
+  feed-service:
+    build: ./feed-service
     env_file:
-      - ./Feed-service/.env
+      - ./feed-service/.env
     depends_on:
       - redis
       - rabbitmq
@@ -80,10 +80,10 @@ services:
       REDIS_URL: redis://redis:6379
       RABBITMQ_URL: amqp://rabbitmq:5672
 
-  Follow-service:
-    build: ./Follow-service
+  follow-service:
+    build: ./follow-service
     env_file:
-      - ./Follow-service/.env
+      - ./follow-service/.env
     depends_on:
       - redis
       - rabbitmq
