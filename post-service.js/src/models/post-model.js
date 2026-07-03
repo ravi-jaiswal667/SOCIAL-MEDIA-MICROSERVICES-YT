@@ -15,6 +15,17 @@ const postSchema = new mongoose.Schema({
             type: String
         }
     ],
+    likes: {
+        type: [mongoose.Schema.Types.ObjectId], // hold all userIds who liked the post
+        default: []
+    },
+    comments: {
+        type: [{
+            userId: mongoose.Schema.Types.ObjectId,
+            text: String
+        }],
+        default: []
+    },
     createdAt: {
         type: Date,
         default: Date.now

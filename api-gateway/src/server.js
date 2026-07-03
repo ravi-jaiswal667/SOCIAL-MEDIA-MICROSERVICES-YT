@@ -113,6 +113,46 @@ app.use('/v1/search', validateUserAuth, proxy(process.env.SEARCH_SERVICE_URL, {
         return proxyResData;
     }
 }));
+// Setting up proxy for notification-service
+app.use('/v1/notify', validateUserAuth, proxy(process.env.NOTIFICATION_SERVICE_URL, {
+    ...proxyOptions,
+    proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
+        proxyReqOpts.headers["content-type"] = "application/json";
+        proxyReqOpts.headers["x-user-id"] = srcReq.user.userId;
+        return proxyReqOpts;
+    },
+    userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
+        logger.info(`Responses recieved from notification service: ${proxyRes.statusCode} `);
+        return proxyResData;
+    }
+}))
+// Setting up proxy for Follow-service
+app.use('/v1/follow', validateUserAuth, proxy(process.env.FOLLOW_SERVICE_URL, {
+    ...proxyOptions,
+    proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
+        proxyReqOpts.headers["content-type"] = "application/json";
+        proxyReqOpts.headers["x-user-id"] = srcReq.user.userId;
+        return proxyReqOpts;
+    },
+    userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
+        logger.info(`Responses recieved from notification service: ${proxyRes.statusCode} `);
+        return proxyResData;
+    }
+}))
+
+// Setting up proxy for Feed-service
+app.use('/v1/feed', validateUserAuth, proxy(process.env.FEED_SERVICE_URL, {
+    ...proxyOptions,
+    proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
+        proxyReqOpts.headers["content-type"] = "application/json";
+        proxyReqOpts.headers["x-user-id"] = srcReq.user.userId;
+        return proxyReqOpts;
+    },
+    userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
+        logger.info(`Responses recieved from notification service: ${proxyRes.statusCode} `);
+        return proxyResData;
+    }
+}))
 
 app.use(errorHandler);
 
@@ -122,6 +162,10 @@ app.listen(PORT, () => {
     logger.info(`server is running on post-service ${process.env.POST_SEVRICE_URL}`);
     logger.info(`server is running on media-service ${process.env.MEDIA_SEVRICE_URL}`);
     logger.info(`server is running on search-service ${process.env.SEARCH_SERVICE_URL}`);
+    logger.info(`server is running on notification-service ${process.env.NOTIFICATION_SERVICE_URL}`);
+    logger.info(`server is running on follow-service ${process.env.FOLLOW_SERVICE_URL}`);
+    logger.info(`server is running on feed-service ${process.env.FEED_SERVICE_URL}`);
     logger.info(`server also has ${process.env.REDIS_URL}`);
-})
+});
+
 

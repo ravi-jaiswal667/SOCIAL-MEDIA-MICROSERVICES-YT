@@ -10,7 +10,7 @@ RUN npm ci --only=production
 
 COPY . .
 
-EXPOSE 3001
+EXPOSE 3007
 
 CMD ["node", "src/server.js"]
 

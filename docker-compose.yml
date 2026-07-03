@@ -26,9 +26,9 @@ services:
       RABBITMQ_URL: amqp://rabbitmq:5672
 
   post-service:
-    build: ./post-service
+    build: ./post-service.js
     env_file:
-      - ./post-service/.env
+      - ./post-service.js/.env
     depends_on:
       - redis
       - rabbitmq
@@ -48,9 +48,42 @@ services:
       RABBITMQ_URL: amqp://rabbitmq:5672
 
   search-service:
-    build: ./search-service
+    build: ./search-service.js
     env_file:
-      - ./search-service/.env
+      - ./search-service.js/.env
+    depends_on:
+      - redis
+      - rabbitmq
+    environment:
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://rabbitmq:5672
+
+  Notification-service:
+    build: ./Notification-service
+    env_file:
+      - ./Notification-service/.env
+    depends_on:
+      - redis
+      - rabbitmq
+    environment:
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://rabbitmq:5672
+
+  Feed-service:
+    build: ./Feed-service
+    env_file:
+      - ./Feed-service/.env
+    depends_on:
+      - redis
+      - rabbitmq
+    environment:
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://rabbitmq:5672
+
+  Follow-service:
+    build: ./Follow-service
+    env_file:
+      - ./Follow-service/.env
     depends_on:
       - redis
       - rabbitmq
@@ -69,7 +102,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
       interval: 30s
       timeout: 10s
       retries: 5

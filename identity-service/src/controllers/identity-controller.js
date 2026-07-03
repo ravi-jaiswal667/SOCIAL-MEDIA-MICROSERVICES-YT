@@ -165,5 +165,21 @@ const logout = async (req, res) => {
     }
 }
 
+const getAllUsers = async (req, res) => {
+    logger.info("getAllUsers endPoint hit...");
+    try {
+        const users = await User.find({});
+        res.status(201).json({
+            success: true,
+            users
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error!!"
+        })
+    }
+}
 
-module.exports = { registerUser, loginUser, refreshTokenUser, logout };
+module.exports = { registerUser, loginUser, refreshTokenUser, logout, getAllUsers };
